@@ -11,13 +11,9 @@ spec:
   containers:
     - name: postgres-container
       image: postgres:17
-      env:
-        - name: POSTGRES_USER
-          value: "foodix"
-        - name: POSTGRES_PASSWORD
-          value: "mypassword"
-        - name: POSTGRES_DB
-          value: "foodix_db"
+      envFrom:
+        - secretRef:
+            name: postgres-secret
       volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-storage
