@@ -20,7 +20,7 @@ spec:
                 - secretRef:
                     name: postgres-secret
                 - configMapRef:
-                    name: foodix
+                    name: foodix-db
               env:
                 - name: CONFIG_PATH
                   value: /config/config.yaml

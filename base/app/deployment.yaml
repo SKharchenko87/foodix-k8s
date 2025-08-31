@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-foodix
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: foodix
+  template:
+    metadata:
+      labels:
+        app: foodix
+    spec:
+      containers:
+        - name: foodix
+          image: ghcr.io/skharchenko87/foodix:1.0.0
+          imagePullPolicy: Always
+          env:
+            - name: FOODIX_CONFIG
+              value: /config/config.yaml
+          volumeMounts:
+            - name: config-yaml
+              mountPath: /config
+              readOnly: true
+          envFrom:
+            - configMapRef:
+                name: foodix-db
+            - secretRef:
+                name: postgres-secret
+      imagePullSecrets:
+        - name: ghcr-secret
+
+      volumes:
+        - name: config-yaml
+          configMap:
+            name: foodix
