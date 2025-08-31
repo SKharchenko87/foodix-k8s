@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+
+metadata:
+  name: foodix-parser
+data:
+  config.yaml: |
+    log:
+      level: "info"
+      format: "json"
+  
+    sources:
+      - name: "calorizator"
+        url: "https://calorizator.ru/product/all"
+        timeout: 15s
+        product_per_page: 80
+        request_delay: 2000
+  
+    db:
+      name: "postgres"
+      batch_size: 1000
